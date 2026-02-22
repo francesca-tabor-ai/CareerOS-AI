@@ -1,3 +1,5 @@
+import { Link } from 'react-router-dom'
+
 // University logos - using text placeholders; replace with actual logo image paths
 const universityLogos = [
   'ESADE',

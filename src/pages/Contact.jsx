@@ -60,6 +60,7 @@ function Contact() {
 
       <section className="contact-form-section">
         <div className="container">
+          {error && <div className="contact-error" role="alert">{error}</div>}
           <form className="contact-form" onSubmit={handleSubmit}>
             <div className="contact-field">
               <label htmlFor="requestType">Request type</label>

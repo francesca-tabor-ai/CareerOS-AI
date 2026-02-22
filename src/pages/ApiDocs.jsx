@@ -167,6 +167,24 @@ const ENDPOINTS = [
     ],
   },
   {
+    section: 'Admin — App Submissions',
+    base: '/api/admin',
+    auth: 'Bearer (ADMIN)',
+    routes: [
+      { method: 'GET', path: '/app-submissions', desc: 'List all app submissions', crud: 'Read' },
+      { method: 'GET', path: '/app-submissions/:id', desc: 'Get app submission by ID', crud: 'Read' },
+      { method: 'DELETE', path: '/app-submissions/:id', desc: 'Delete app submission', crud: 'Delete' },
+    ],
+  },
+  {
+    section: 'App Submissions (Public)',
+    base: '/api',
+    auth: 'None',
+    routes: [
+      { method: 'POST', path: '/app-submissions', desc: 'Submit partner app application', body: 'companyName, developerEmail, developerName, appName, appDescription, integrationTypes[], appStage?, apiUsage?, webhooksNeeded?, dataAccess?, whyCareerOS, termsAccepted', crud: 'Create' },
+    ],
+  },
+  {
     section: 'Health',
     base: '/api',
     auth: 'None',

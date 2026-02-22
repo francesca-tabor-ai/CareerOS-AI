@@ -34,6 +34,7 @@ function Layout({ children }) {
             <Link to="/marketplace">Marketplace</Link>
             <Link to="/api-docs">API Docs</Link>
             <Link to="/contact">Contact</Link>
+            <Link to="/apps/build">Build app</Link>
             <a href="#">Privacy</a>
             <a href="#">Terms</a>
           </div>

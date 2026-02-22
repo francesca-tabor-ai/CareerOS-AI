@@ -19,6 +19,27 @@ npm run dev
 
 Open [http://localhost:5173](http://localhost:5173).
 
+### Backend API
+
+The backend runs separately:
+
+```bash
+cd backend
+npm install
+cp .env.example .env   # Edit with your DATABASE_URL and JWT_SECRET
+npx prisma db push
+npm run db:seed
+npm run dev
+```
+
+The API runs on [http://localhost:3001](http://localhost:3001). Set `VITE_API_URL=http://localhost:3001` in the frontend `.env.local` if different.
+
+### Admin dashboard
+
+- Navigate to `/admin` to sign in as admin
+- Default admin: `admin@careeros.ai` / `Admin123!` (from seed)
+- Admins can view and manage contact submissions, app submissions, users, plans, and case studies
+
 ### Build for production
 
 ```bash

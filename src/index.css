@@ -604,6 +604,14 @@ img {
 .contact-note strong {
   color: var(--color-accent);
 }
+.contact-error {
+  padding: 1rem;
+  background: rgba(239, 68, 68, 0.15);
+  border: 1px solid rgba(239, 68, 68, 0.3);
+  border-radius: var(--radius-sm);
+  color: #ef4444;
+  margin-bottom: 1rem;
+}
 
 /* Chat widget */
 .chat-toggle {
@@ -1288,4 +1296,158 @@ img {
   justify-content: space-between;
   align-items: center;
   gap: 1rem;
+}
+
+/* Admin */
+.admin-login-page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  background: var(--color-bg);
+}
+.admin-login-card {
+  width: 100%;
+  max-width: 400px;
+  padding: 2.5rem;
+  background: var(--color-bg-card);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+}
+.admin-login-title {
+  font-size: 1.75rem;
+  margin-bottom: 0.25rem;
+}
+.admin-login-subtitle {
+  color: var(--color-text-muted);
+  font-size: 0.9375rem;
+  margin-bottom: 1.5rem;
+}
+.admin-login-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+.admin-login-form .contact-field {
+  margin-bottom: 0;
+}
+.admin-login-back {
+  margin-top: 1.5rem;
+  font-size: 0.875rem;
+  color: var(--color-text-muted);
+}
+.admin-login-back a {
+  color: var(--color-accent);
+}
+.admin-login-back a:hover {
+  text-decoration: underline;
+}
+.admin-header {
+  background: var(--color-bg-elevated);
+  border-bottom: 1px solid var(--color-border);
+  padding: 1rem 0;
+}
+.admin-header-inner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.admin-brand {
+  font-size: 1.25rem;
+}
+.admin-header-actions {
+  display: flex;
+  gap: 0.5rem;
+}
+.admin-main {
+  padding: 2rem 0 4rem;
+}
+.admin-tabs {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+}
+.admin-tab {
+  padding: 0.5rem 1rem;
+  font-family: var(--font-heading);
+  font-weight: 600;
+  font-size: 0.9375rem;
+  background: transparent;
+  color: var(--color-text-muted);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+}
+.admin-tab:hover {
+  color: var(--color-text);
+  border-color: var(--color-text-muted);
+}
+.admin-tab.active {
+  background: var(--color-accent-soft);
+  color: var(--color-accent);
+  border-color: var(--color-accent);
+}
+.admin-table-wrap {
+  overflow-x: auto;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  margin-bottom: 1rem;
+}
+.admin-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9375rem;
+}
+.admin-table th,
+.admin-table td {
+  padding: 0.75rem 1rem;
+  text-align: left;
+  border-bottom: 1px solid var(--color-border);
+}
+.admin-table th {
+  font-weight: 600;
+  color: var(--color-text-muted);
+  white-space: nowrap;
+}
+.admin-table tbody tr:last-child td {
+  border-bottom: none;
+}
+.admin-table tbody tr:hover {
+  background: var(--color-bg-elevated);
+}
+.admin-cell-message {
+  max-width: 200px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.admin-delete {
+  width: 28px;
+  height: 28px;
+  padding: 0;
+  font-size: 1.25rem;
+  line-height: 1;
+  color: var(--color-text-muted);
+  background: transparent;
+  border: none;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+}
+.admin-delete:hover {
+  color: #ef4444;
+  background: rgba(239, 68, 68, 0.1);
+}
+.admin-empty {
+  padding: 2rem;
+  text-align: center;
+  color: var(--color-text-muted);
+}
+.admin-loading {
+  padding: 2rem;
+  text-align: center;
+  color: var(--color-text-muted);
+}
+.admin-refresh {
+  margin-top: 0.5rem;
 }
