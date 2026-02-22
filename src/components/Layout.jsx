@@ -13,6 +13,8 @@ function Layout({ children }) {
             <Link to="/">Home</Link>
             <Link to="/pricing">Pricing</Link>
             <Link to="/case-studies">Case Studies</Link>
+            <Link to="/marketplace">Marketplace</Link>
+            <Link to="/api-docs">API Docs</Link>
             <Link to="/contact">Contact</Link>
             <Link to="/pricing" className="btn btn-primary">Get started</Link>
           </nav>
@@ -29,6 +31,8 @@ function Layout({ children }) {
             <Link to="/">Home</Link>
             <Link to="/pricing">Pricing</Link>
             <Link to="/case-studies">Case Studies</Link>
+            <Link to="/marketplace">Marketplace</Link>
+            <Link to="/api-docs">API Docs</Link>
             <Link to="/contact">Contact</Link>
             <a href="#">Privacy</a>
             <a href="#">Terms</a>

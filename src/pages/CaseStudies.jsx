@@ -88,7 +88,7 @@ function CaseStudies() {
         <div className="container">
           <h2 className="section-title">Join them</h2>
           <p className="section-lead">Start your 2-week free trial and see the impact for yourself.</p>
-          <a href="#" className="btn btn-primary btn-lg">Get started</a>
+          <Link to="/pricing" className="btn btn-primary btn-lg">Get started</Link>
         </div>
       </section>
     </>

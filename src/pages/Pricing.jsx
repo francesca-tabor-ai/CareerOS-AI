@@ -93,14 +93,20 @@ function Pricing() {
                     <li key={feature}>{feature}</li>
                   ))}
                 </ul>
-                {plan.href.startsWith('/') ? (
-                  <Link to={plan.href} className={`btn ${plan.popular ? 'btn-primary' : 'btn-outline'}`}>
+                {plan.href && plan.href !== '#' ? (
+                  plan.href.startsWith('/') ? (
+                    <Link to={plan.href} className={`btn ${plan.popular ? 'btn-primary' : 'btn-outline'}`}>
+                      {plan.cta}
+                    </Link>
+                  ) : (
+                    <a href={plan.href} className={`btn ${plan.popular ? 'btn-primary' : 'btn-outline'}`}>
+                      {plan.cta}
+                    </a>
+                  )
+                ) : (
+                  <Link to="/contact" className={`btn ${plan.popular ? 'btn-primary' : 'btn-outline'}`}>
                     {plan.cta}
                   </Link>
-                ) : (
-                  <a href={plan.href} className={`btn ${plan.popular ? 'btn-primary' : 'btn-outline'}`}>
-                    {plan.cta}
-                  </a>
                 )}
               </article>
             ))}

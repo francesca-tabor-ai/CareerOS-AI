@@ -6,8 +6,6 @@ const REQUEST_TYPES = [
   { value: 'general', label: 'General inquiry' },
 ]
 
-const RECIPIENT_EMAIL = 'info@francescatabor.com'
-
 function Contact() {
   const [formData, setFormData] = useState({
     requestType: 'support',
@@ -16,28 +14,37 @@ function Contact() {
     subject: '',
     message: '',
   })
+  const [submitting, setSubmitting] = useState(false)
+  const [submitted, setSubmitted] = useState(false)
+  const [error, setError] = useState(null)
 
   const handleChange = (e) => {
     const { name, value } = e.target
     setFormData((prev) => ({ ...prev, [name]: value }))
+    setError(null)
   }
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
-
-    const typeLabel = REQUEST_TYPES.find((t) => t.value === formData.requestType)?.label ?? formData.requestType
-
-    const subject = `[${typeLabel}] ${formData.subject || 'Contact form submission'}`
-    const body = [
-      `Request type: ${typeLabel}`,
-      `Name: ${formData.name}`,
-      `Email: ${formData.email}`,
-      '',
-      formData.message,
-    ].join('\n')
-
-    const mailto = `mailto:${RECIPIENT_EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`
-    window.location.href = mailto
+    setError(null)
+    setSubmitting(true)
+    try {
+      const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:3001'
+      const res = await fetch(`${apiUrl}/api/contact`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData),
+      })
+      const data = await res.json().catch(() => ({}))
+      if (!res.ok) {
+        throw new Error(data.error || data.errors?.[0]?.msg || 'Submission failed')
+      }
+      setSubmitted(true)
+    } catch (err) {
+      setError(err.message || 'Something went wrong. Please try again.')
+    } finally {
+      setSubmitting(false)
+    }
   }
 
   return (
@@ -124,12 +131,8 @@ function Contact() {
               />
             </div>
 
-            <p className="contact-note">
-              Submissions open your email client with a pre-filled message to <strong>{RECIPIENT_EMAIL}</strong>. Just hit send.
-            </p>
-
-            <button type="submit" className="btn btn-primary btn-lg">
-              Open email to send
+            <button type="submit" className="btn btn-primary btn-lg" disabled={submitting}>
+              {submitting ? 'Sending...' : 'Send message'}
             </button>
           </form>
         </div>
