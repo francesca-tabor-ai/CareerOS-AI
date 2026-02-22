@@ -79,9 +79,12 @@ router.patch(
       const errors = validationResult(req)
       if (!errors.isEmpty()) return res.status(400).json({ errors: errors.array() })
 
-      const data = { ...req.body }
-      if (data.password) data.passwordHash = await bcrypt.hash(data.password, 10)
-      delete data.password
+      const { email, password, name, role } = req.body
+      const data = {}
+      if (email !== undefined) data.email = email
+      if (name !== undefined) data.name = name
+      if (role !== undefined) data.role = role
+      if (password) data.passwordHash = await bcrypt.hash(password, 10)
 
       const user = await prisma.user.update({
         where: { id: req.params.id },

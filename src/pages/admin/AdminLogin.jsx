@@ -28,6 +28,8 @@ function AdminLogin() {
       if (data.user?.role !== 'ADMIN') {
         throw new Error('Admin access required')
       }
+      localStorage.setItem('token', data.token)
+      localStorage.setItem('user', JSON.stringify(data.user))
       localStorage.setItem(ADMIN_STORAGE_KEY, data.token)
       navigate('/admin/dashboard')
     } catch (err) {

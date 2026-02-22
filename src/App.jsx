@@ -4,18 +4,22 @@ import Landing from './pages/Landing'
 import Pricing from './pages/Pricing'
 import CaseStudies from './pages/CaseStudies'
 import Contact from './pages/Contact'
+import Login from './pages/Login'
+import Signup from './pages/Signup'
 import ApiDocs from './pages/ApiDocs'
 import Marketplace from './pages/Marketplace'
 import BuildApp from './pages/BuildApp'
 import AdminLogin from './pages/admin/AdminLogin'
-import AdminDashboard from './pages/admin/AdminDashboard'
+import Admin from './pages/Admin'
 import NotFound from './pages/NotFound'
 
 function App() {
   return (
     <Routes>
+      <Route path="/login" element={<Login />} />
+      <Route path="/signup" element={<Signup />} />
       <Route path="/admin" element={<AdminLogin />} />
-      <Route path="/admin/dashboard" element={<AdminDashboard />} />
+      <Route path="/admin/dashboard" element={<Admin />} />
       <Route path="/" element={<Layout><Landing /></Layout>} />
       <Route path="/pricing" element={<Layout><Pricing /></Layout>} />
       <Route path="/case-studies" element={<Layout><CaseStudies /></Layout>} />

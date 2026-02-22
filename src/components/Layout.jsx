@@ -16,7 +16,8 @@ function Layout({ children }) {
             <Link to="/marketplace">Marketplace</Link>
             <Link to="/api-docs">API Docs</Link>
             <Link to="/contact">Contact</Link>
-            <Link to="/pricing" className="btn btn-primary">Get started</Link>
+            <Link to="/login">Log in</Link>
+            <Link to="/signup" className="btn btn-primary">Sign up</Link>
           </nav>
         </div>
       </header>
