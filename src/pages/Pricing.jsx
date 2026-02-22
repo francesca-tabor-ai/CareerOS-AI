@@ -55,7 +55,7 @@ const plans = [
       'Custom training & onboarding',
     ],
     cta: 'Contact sales',
-    href: '#',
+    href: '/contact',
     popular: false,
   },
 ]
@@ -93,9 +93,15 @@ function Pricing() {
                     <li key={feature}>{feature}</li>
                   ))}
                 </ul>
-                <a href={plan.href} className={`btn ${plan.popular ? 'btn-primary' : 'btn-outline'}`}>
-                  {plan.cta}
-                </a>
+                {plan.href.startsWith('/') ? (
+                  <Link to={plan.href} className={`btn ${plan.popular ? 'btn-primary' : 'btn-outline'}`}>
+                    {plan.cta}
+                  </Link>
+                ) : (
+                  <a href={plan.href} className={`btn ${plan.popular ? 'btn-primary' : 'btn-outline'}`}>
+                    {plan.cta}
+                  </a>
+                )}
               </article>
             ))}
           </div>
@@ -157,7 +163,7 @@ function Pricing() {
           <p className="section-lead">Not sure which plan? Start with a 2-week free trial or book a call.</p>
           <div className="cta-buttons">
             <Link to="/" className="btn btn-primary">Start free trial</Link>
-            <a href="#" className="btn btn-ghost">Book a demo</a>
+            <Link to="/contact" className="btn btn-ghost">Book a demo</Link>
           </div>
         </div>
       </section>

@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom'
+import ChatWidget from './ChatWidget'
 
 function Layout({ children }) {
   return (
@@ -12,6 +13,7 @@ function Layout({ children }) {
             <Link to="/">Home</Link>
             <Link to="/pricing">Pricing</Link>
             <Link to="/case-studies">Case Studies</Link>
+            <Link to="/contact">Contact</Link>
             <Link to="/pricing" className="btn btn-primary">Get started</Link>
           </nav>
         </div>
@@ -27,12 +29,13 @@ function Layout({ children }) {
             <Link to="/">Home</Link>
             <Link to="/pricing">Pricing</Link>
             <Link to="/case-studies">Case Studies</Link>
-            <a href="#">Contact</a>
+            <Link to="/contact">Contact</Link>
             <a href="#">Privacy</a>
             <a href="#">Terms</a>
           </div>
         </div>
       </footer>
+      <ChatWidget />
     </>
   )
 }

@@ -98,7 +98,10 @@ function Landing() {
         <div className="container">
           <h2 className="section-title">Ready to do more with the team you have?</h2>
           <p className="section-lead">Join 70+ universities transforming how students connect, explore, and succeed.</p>
-          <Link to="/pricing" className="btn btn-primary btn-lg">Start 2-week free trial</Link>
+          <div className="hero-cta">
+            <Link to="/pricing" className="btn btn-primary btn-lg">Start 2-week free trial</Link>
+            <Link to="/contact" className="btn btn-ghost btn-lg">Contact us</Link>
+          </div>
         </div>
       </section>
     </>
