@@ -34,6 +34,19 @@ npm run dev
 
 The API runs on [http://localhost:3001](http://localhost:3001). Set `VITE_API_URL=http://localhost:3001` in the frontend `.env.local` if different.
 
+### Job Application Engine (`/app`)
+
+Sign up or log in, then go to `/app` to access the CareerOS AI Job Application Engine:
+
+- **Dashboard** — Overview and quick links
+- **Jobs** — Add jobs via paste-and-parse or manual entry
+- **Applications** — Track applications, edit cover letters & PRDs
+- **Insights** — Analytics and recommendations
+- **Profile** — Resume, skills, preferences for AI generation
+- **Market Intelligence** — Full classic UI with strategic parsing
+
+Required env for AI features: `GEMINI_API_KEY` in backend `.env`.
+
 ### Admin dashboard
 
 - Navigate to `/admin` to sign in as admin

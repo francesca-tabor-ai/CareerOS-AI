@@ -3,6 +3,40 @@ import { GoogleGenAI, Type } from "@google/genai";
 const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
 
 /**
+ * Extract structured job fields from pasted text (URL or description)
+ * @param {string} rawInput - Pasted URL or full job description
+ * @returns {Promise<{company_name:string,job_title:string,job_description:string,application_link:string|null}>}
+ */
+export async function parseJobFromText(rawInput) {
+  const response = await ai.models.generateContent({
+    model: "gemini-2.0-flash",
+    contents: `Extract job application details from the following text. It may be a URL, a job posting, or a mix.
+    Text: ${rawInput.slice(0, 15000)}`,
+    config: {
+      responseMimeType: "application/json",
+      responseSchema: {
+        type: Type.OBJECT,
+        properties: {
+          company_name: { type: Type.STRING, description: "Company/organization name" },
+          job_title: { type: Type.STRING, description: "Job title or role" },
+          job_description: { type: Type.STRING, description: "Full job description text" },
+          application_link: { type: Type.STRING, description: "URL to apply, or null if not found" },
+        },
+        required: ["company_name", "job_title", "job_description"],
+      },
+    },
+  });
+
+  const parsed = JSON.parse(response.text || "{}");
+  return {
+    company_name: parsed.company_name || "Unknown",
+    job_title: parsed.job_title || "Product Role",
+    job_description: parsed.job_description || rawInput,
+    application_link: parsed.application_link || null,
+  };
+}
+
+/**
  * Parse job description for strategic PM insights using AI Maturity Framework
  * @param {string} jobDescription
  * @returns {Promise<{coreProductFocus:string,aiMaturityStage:number,strategicOpportunityGap:string,competitivePositioning:string,hiddenTransformationOpportunity:string}>}

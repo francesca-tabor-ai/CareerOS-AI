@@ -16,12 +16,17 @@ router.get('/', async (req, res) => {
     if (!user) return res.status(404).json({ error: 'User not found' });
 
     const p = user.profile;
+    const prefs = (typeof p?.preferences === 'object' && p.preferences) || {};
     const profile = {
       id: p?.id,
       name: user.name ?? '',
+      headline: p?.headline ?? '',
       cv_text: p?.summary ?? '',
-      prior_prds: (p?.preferences && typeof p.preferences === 'object' && p.preferences.priorPrds) ? p.preferences.priorPrds : '',
+      resume_url: p?.resumeUrl ?? '',
+      skills: p?.skills ?? [],
       target_roles: (p?.targetRoles ?? []).join(', '),
+      prior_prds: prefs.priorPrds ?? '',
+      include_prd: prefs.includePRD ?? true,
     };
     res.json(profile);
   } catch (err) {
@@ -32,7 +37,7 @@ router.get('/', async (req, res) => {
 
 router.post('/', async (req, res) => {
   try {
-    const { name, cv_text, prior_prds, target_roles } = req.body;
+    const { name, headline, cv_text, resume_url, skills, prior_prds, target_roles, include_prd } = req.body;
 
     await prisma.user.update({
       where: { id: req.userId },
@@ -43,24 +48,37 @@ router.post('/', async (req, res) => {
       ? target_roles.split(',').map(s => s.trim()).filter(Boolean)
       : Array.isArray(target_roles) ? target_roles : [];
 
+    const skillsArr = Array.isArray(skills)
+      ? skills
+      : typeof skills === 'string'
+        ? skills.split(',').map(s => s.trim()).filter(Boolean)
+        : [];
+
     const existing = await prisma.userProfile.findUnique({
       where: { userId: req.userId },
     });
     const prefs = {
       ...(typeof existing?.preferences === 'object' ? existing.preferences : {}),
       ...(prior_prds !== undefined ? { priorPrds: prior_prds } : {}),
+      ...(include_prd !== undefined ? { includePRD: !!include_prd } : {}),
     };
 
     await prisma.userProfile.upsert({
       where: { userId: req.userId },
       create: {
         userId: req.userId,
+        headline: headline || undefined,
         summary: cv_text ?? '',
+        resumeUrl: resume_url || undefined,
+        skills: skillsArr,
         targetRoles: targetRolesArr,
         preferences: Object.keys(prefs).length ? prefs : undefined,
       },
       update: {
+        headline: headline !== undefined ? headline : undefined,
         summary: cv_text !== undefined ? cv_text : undefined,
+        resumeUrl: resume_url !== undefined ? resume_url : undefined,
+        skills: skills !== undefined ? skillsArr : undefined,
         targetRoles: targetRolesArr.length ? targetRolesArr : undefined,
         preferences: Object.keys(prefs).length ? prefs : undefined,
       },

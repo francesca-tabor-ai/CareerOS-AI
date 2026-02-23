@@ -1,5 +1,7 @@
 import { Routes, Route, Navigate } from 'react-router-dom'
 import Layout from './components/Layout'
+import AppDashboardLayout from './components/app/AppDashboardLayout'
+import AppGuard from './pages/app/AppGuard'
 import Landing from './pages/Landing'
 import Pricing from './pages/Pricing'
 import CaseStudies from './pages/CaseStudies'
@@ -12,6 +14,12 @@ import BuildApp from './pages/BuildApp'
 import AdminLogin from './pages/admin/AdminLogin'
 import Admin from './pages/Admin'
 import CareerOSApp from './pages/CareerOSApp'
+import Dashboard from './pages/app/Dashboard'
+import Jobs from './pages/app/Jobs'
+import Applications from './pages/app/Applications'
+import ApplicationDetail from './pages/app/ApplicationDetail'
+import Insights from './pages/app/Insights'
+import Profile from './pages/app/Profile'
 import NotFound from './pages/NotFound'
 import Privacy from './pages/Privacy'
 import Terms from './pages/Terms'
@@ -23,7 +31,17 @@ function App() {
       <Route path="/signup" element={<Signup />} />
       <Route path="/admin" element={<AdminLogin />} />
       <Route path="/admin/dashboard" element={<Admin />} />
-      <Route path="/app" element={<CareerOSApp />} />
+      <Route path="/app" element={<AppGuard />}>
+        <Route path="classic" element={<CareerOSApp />} />
+        <Route element={<AppDashboardLayout />}>
+          <Route index element={<Dashboard />} />
+          <Route path="jobs" element={<Jobs />} />
+          <Route path="applications" element={<Applications />} />
+          <Route path="applications/:id" element={<ApplicationDetail />} />
+          <Route path="profile" element={<Profile />} />
+          <Route path="insights" element={<Insights />} />
+        </Route>
+      </Route>
       <Route path="/" element={<Layout><Landing /></Layout>} />
       <Route path="/pricing" element={<Layout><Pricing /></Layout>} />
       <Route path="/case-studies" element={<Layout><CaseStudies /></Layout>} />

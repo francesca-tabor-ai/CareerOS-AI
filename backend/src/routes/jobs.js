@@ -1,7 +1,7 @@
 import { Router } from 'express';
 import { PrismaClient } from '@prisma/client';
 import { authMiddleware } from '../middleware/auth.js';
-import { parseJobIntelligence, generateCoverLetter, generatePRD } from '../services/geminiService.js';
+import { parseJobFromText, parseJobIntelligence, generateCoverLetter, generatePRD } from '../services/geminiService.js';
 
 const router = Router();
 const prisma = new PrismaClient();
@@ -37,6 +37,20 @@ function toCareerOsJob(app) {
 
 router.use(authMiddleware);
 
+router.post('/parse', async (req, res) => {
+  try {
+    const { raw_input } = req.body;
+    if (!raw_input || typeof raw_input !== 'string') {
+      return res.status(400).json({ error: 'raw_input (string) is required' });
+    }
+    const parsed = await parseJobFromText(raw_input);
+    res.json(parsed);
+  } catch (err) {
+    console.error('Error parsing job:', err);
+    res.status(500).json({ error: err.message || 'Failed to parse job' });
+  }
+});
+
 router.get('/', async (req, res) => {
   try {
     const apps = await prisma.application.findMany({
@@ -57,7 +71,7 @@ router.get('/', async (req, res) => {
 
 router.post('/', async (req, res) => {
   try {
-    const { company_name, job_title, job_description, application_link } = req.body;
+    const { company_name, job_title, job_description, application_link, raw_input } = req.body;
     if (!company_name || !job_title || !job_description) {
       return res.status(400).json({ error: 'company_name, job_title, and job_description are required' });
     }
@@ -68,7 +82,8 @@ router.post('/', async (req, res) => {
         jobTitle: job_title,
         jobDescription: job_description,
         applicationLink: application_link || null,
-        source: 'manual',
+        source: req.body.raw_input ? 'paste' : 'manual',
+        rawInput: req.body.raw_input || null,
       },
     });
 
