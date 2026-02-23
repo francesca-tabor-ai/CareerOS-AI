@@ -1,4 +1,5 @@
 import { Routes, Route, Navigate } from 'react-router-dom'
+import ScrollToTop from './components/ScrollToTop'
 import Layout from './components/Layout'
 import AppDashboardLayout from './components/app/AppDashboardLayout'
 import AppGuard from './pages/app/AppGuard'
@@ -26,7 +27,9 @@ import Terms from './pages/Terms'
 
 function App() {
   return (
-    <Routes>
+    <>
+      <ScrollToTop />
+      <Routes>
       <Route path="/login" element={<Login />} />
       <Route path="/signup" element={<Signup />} />
       <Route path="/admin" element={<AdminLogin />} />
@@ -54,6 +57,7 @@ function App() {
       <Route path="/404" element={<Layout><NotFound /></Layout>} />
       <Route path="*" element={<Navigate to="/404" replace />} />
     </Routes>
+    </>
   )
 }
 
