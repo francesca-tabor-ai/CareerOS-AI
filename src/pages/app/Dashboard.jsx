@@ -105,7 +105,7 @@ function Dashboard() {
           action={
             <Link
               to="/app/jobs"
-              className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-[var(--color-accent)] text-[var(--color-bg)] font-semibold text-sm hover:opacity-90 transition-opacity"
+              className="btn btn-primary"
             >
               Add a job →
             </Link>

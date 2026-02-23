@@ -26,7 +26,7 @@ function AppDashboardLayout() {
         <div className="sticky top-0 flex h-screen flex-col">
           <div className="p-5 border-b border-[var(--color-border)]">
             <Link to="/app" className="font-[var(--font-heading)] font-bold text-lg text-[var(--color-text)]">
-              Career<span className="text-[var(--color-accent)]">OS</span> AI
+              Career<span className="gradient-text">OS</span> AI
             </Link>
             <p className="text-xs text-[var(--color-text-muted)] mt-0.5">Job Application Engine</p>
           </div>
