@@ -57,7 +57,7 @@
 .admin-main {
   flex: 1;
   padding: 2rem;
-  overflow-auto;
+  overflow: auto;
 }
 
 .admin-main h1 {

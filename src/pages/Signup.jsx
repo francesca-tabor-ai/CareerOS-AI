@@ -1,9 +1,10 @@
 import { useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, useNavigate, useSearchParams } from 'react-router-dom'
 import { apiJson } from '../lib/api'
 
 function Signup() {
   const navigate = useNavigate()
+  const [searchParams] = useSearchParams()
   const [form, setForm] = useState({ email: '', password: '', name: '' })
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
@@ -19,7 +20,8 @@ function Signup() {
       })
       localStorage.setItem('token', token)
       localStorage.setItem('user', JSON.stringify(user))
-      navigate('/')
+      const redirect = searchParams.get('redirect') || '/'
+      navigate(redirect)
     } catch (err) {
       setError(err.message || 'Signup failed')
     } finally {

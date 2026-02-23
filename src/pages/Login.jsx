@@ -1,9 +1,10 @@
 import { useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, useNavigate, useSearchParams } from 'react-router-dom'
 import { apiJson } from '../lib/api'
 
 function Login() {
   const navigate = useNavigate()
+  const [searchParams] = useSearchParams()
   const [form, setForm] = useState({ email: '', password: '' })
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
@@ -20,9 +21,10 @@ function Login() {
       localStorage.setItem('token', token)
       localStorage.setItem('user', JSON.stringify(user))
       if (user.role === 'ADMIN') {
-        navigate('/admin')
+        navigate('/admin/dashboard')
       } else {
-        navigate('/')
+        const redirect = searchParams.get('redirect') || '/'
+        navigate(redirect)
       }
     } catch (err) {
       setError(err.message || 'Login failed')

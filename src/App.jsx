@@ -11,7 +11,10 @@ import Marketplace from './pages/Marketplace'
 import BuildApp from './pages/BuildApp'
 import AdminLogin from './pages/admin/AdminLogin'
 import Admin from './pages/Admin'
+import CareerOSApp from './pages/CareerOSApp'
 import NotFound from './pages/NotFound'
+import Privacy from './pages/Privacy'
+import Terms from './pages/Terms'
 
 function App() {
   return (
@@ -20,6 +23,7 @@ function App() {
       <Route path="/signup" element={<Signup />} />
       <Route path="/admin" element={<AdminLogin />} />
       <Route path="/admin/dashboard" element={<Admin />} />
+      <Route path="/app" element={<CareerOSApp />} />
       <Route path="/" element={<Layout><Landing /></Layout>} />
       <Route path="/pricing" element={<Layout><Pricing /></Layout>} />
       <Route path="/case-studies" element={<Layout><CaseStudies /></Layout>} />
@@ -27,6 +31,8 @@ function App() {
       <Route path="/apps/build" element={<Layout><BuildApp /></Layout>} />
       <Route path="/api-docs" element={<Layout><ApiDocs /></Layout>} />
       <Route path="/contact" element={<Layout><Contact /></Layout>} />
+      <Route path="/privacy" element={<Layout><Privacy /></Layout>} />
+      <Route path="/terms" element={<Layout><Terms /></Layout>} />
       <Route path="/404" element={<Layout><NotFound /></Layout>} />
       <Route path="*" element={<Navigate to="/404" replace />} />
     </Routes>

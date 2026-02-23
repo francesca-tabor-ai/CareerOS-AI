@@ -1,7 +1,25 @@
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
+import { useState, useEffect } from 'react'
 import ChatWidget from './ChatWidget'
 
 function Layout({ children }) {
+  const navigate = useNavigate()
+  const [user, setUser] = useState(null)
+
+  useEffect(() => {
+    const stored = localStorage.getItem('user')
+    if (stored) {
+      try { setUser(JSON.parse(stored)) } catch { /* ignore */ }
+    }
+  }, [])
+
+  function handleLogout() {
+    localStorage.removeItem('token')
+    localStorage.removeItem('user')
+    setUser(null)
+    navigate('/')
+  }
+
   return (
     <>
       <header className="header">
@@ -16,8 +34,17 @@ function Layout({ children }) {
             <Link to="/marketplace">Marketplace</Link>
             <Link to="/api-docs">API Docs</Link>
             <Link to="/contact">Contact</Link>
-            <Link to="/login">Log in</Link>
-            <Link to="/signup" className="btn btn-primary">Sign up</Link>
+            {user ? (
+              <>
+                <Link to="/app">My App</Link>
+                <button type="button" className="btn btn-ghost" onClick={handleLogout}>Log out</button>
+              </>
+            ) : (
+              <>
+                <Link to="/login">Log in</Link>
+                <Link to="/signup" className="btn btn-primary">Sign up</Link>
+              </>
+            )}
           </nav>
         </div>
       </header>
@@ -36,8 +63,8 @@ function Layout({ children }) {
             <Link to="/api-docs">API Docs</Link>
             <Link to="/contact">Contact</Link>
             <Link to="/apps/build">Build app</Link>
-            <a href="#">Privacy</a>
-            <a href="#">Terms</a>
+            <Link to="/privacy">Privacy</Link>
+            <Link to="/terms">Terms</Link>
           </div>
         </div>
       </footer>
