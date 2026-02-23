@@ -16,6 +16,9 @@ model User {
   createdAt    DateTime @default(now()) @map("created_at")
   updatedAt    DateTime @updatedAt @map("updated_at")
 
+  profile      UserProfile?
+  applications Application[]
+
   @@map("users")
 }
 
@@ -86,4 +89,110 @@ model AppSubmission {
   createdAt        DateTime @default(now()) @map("created_at")
 
   @@map("app_submissions")
+}
+
+// CareerOS AI - Job Application Engine
+
+model UserProfile {
+  id            String   @id @default(cuid())
+  userId        String   @unique @map("user_id")
+  user          User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  headline      String?
+  summary       String?  @db.Text
+  resumeUrl     String?  @map("resume_url")
+  skills        String[] // Postgres array
+  experience    Json?    // [{ title, company, years, highlights[] }]
+  targetRoles   String[] @map("target_roles") // e.g. ["AI Product Manager", "Senior PM"]
+  preferences   Json?    // { includePRD: boolean, tone: string, ... }
+  createdAt     DateTime @default(now()) @map("created_at")
+  updatedAt     DateTime @updatedAt @map("updated_at")
+
+  applications  Application[]
+
+  @@map("user_profiles")
+}
+
+model Job {
+  id                String   @id @default(cuid())
+  companyName       String   @map("company_name")
+  jobTitle          String   @map("job_title")
+  jobDescription    String   @db.Text @map("job_description")
+  applicationLink  String?  @map("application_link")
+  source            String?  // "email" | "url" | "manual" | "rss"
+  aiKeywords        String[] @map("ai_keywords") // detected AI-related keywords
+  aiMaturityLevel   Int?     @map("ai_maturity_level") // 1-7 per framework
+  roleIntelligence  Json?    @map("role_intelligence") // parsed LLM output
+  rawInput          String?  @db.Text @map("raw_input") // original paste/URL
+  createdAt         DateTime @default(now()) @map("created_at")
+  updatedAt         DateTime @updatedAt @map("updated_at")
+
+  applications      Application[]
+
+  @@map("jobs")
+}
+
+model Application {
+  id              String            @id @default(cuid())
+  userId          String            @map("user_id")
+  user            User              @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userProfileId   String?           @map("user_profile_id")
+  userProfile     UserProfile?      @relation(fields: [userProfileId], references: [id], onDelete: SetNull)
+  jobId           String            @map("job_id")
+  job             Job               @relation(fields: [jobId], references: [id], onDelete: Cascade)
+  status          ApplicationStatus @default(DRAFT)
+  matchScore      Float?            @map("match_score") // 0-100
+  outcome         ApplicationOutcome?
+  stageReached   String?           @map("stage_reached") // "screen" | "phone" | "onsite" | "offer"
+  feedbackThemes  String[]          @map("feedback_themes") // Postgres array
+  appliedAt       DateTime?         @map("applied_at")
+  outcomeAt       DateTime?         @map("outcome_at")
+  notes           String?           @db.Text
+  createdAt       DateTime         @default(now()) @map("created_at")
+  updatedAt       DateTime         @updatedAt @map("updated_at")
+
+  coverLetter     CoverLetter?
+  prd             Prd?
+
+  @@map("applications")
+}
+
+enum ApplicationStatus {
+  DRAFT
+  PENDING_REVIEW
+  SUBMITTED
+  IN_PROGRESS
+  ARCHIVED
+}
+
+enum ApplicationOutcome {
+  PENDING
+  INTERVIEW
+  OFFER
+  REJECTED
+  WITHDRAWN
+}
+
+model CoverLetter {
+  id              String   @id @default(cuid())
+  applicationId  String   @unique @map("application_id")
+  application     Application @relation(fields: [applicationId], references: [id], onDelete: Cascade)
+  content         String   @db.Text
+  wordCount       Int      @map("word_count")
+  generatedAt     DateTime @default(now()) @map("generated_at")
+  editedAt        DateTime? @map("edited_at")
+
+  @@map("cover_letters")
+}
+
+model Prd {
+  id              String   @id @default(cuid())
+  applicationId  String   @unique @map("application_id")
+  application     Application @relation(fields: [applicationId], references: [id], onDelete: Cascade)
+  content         String   @db.Text
+  aiMaturityCurrent  Int?   @map("ai_maturity_current")
+  aiMaturityTarget   Int?   @map("ai_maturity_target")
+  generatedAt     DateTime @default(now()) @map("generated_at")
+  editedAt        DateTime? @map("edited_at")
+
+  @@map("prds")
 }

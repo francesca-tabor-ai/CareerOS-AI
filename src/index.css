@@ -1,3 +1,25 @@
+@import "tailwindcss";
+
+/* CareerOS AI – Design System (elegant, refined aesthetic) */
+@theme {
+  --color-bg: #0c0e12;
+  --color-bg-elevated: #151922;
+  --color-bg-card: #1a1e28;
+  --color-text: #e8eaed;
+  --color-text-muted: #9ca3af;
+  --color-accent: #f59e0b;
+  --color-accent-soft: rgba(245, 158, 11, 0.15);
+  --color-teal: #2dd4bf;
+  --color-teal-soft: rgba(45, 212, 191, 0.12);
+  --color-border: rgba(255, 255, 255, 0.08);
+  --font-heading: 'Outfit', system-ui, sans-serif;
+  --font-body: 'DM Sans', system-ui, sans-serif;
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 20px;
+  --radius-xl: 28px;
+}
+
 :root {
   /* Warm, editorial palette - professional, trustworthy */
   --color-bg: #0c0e12;
